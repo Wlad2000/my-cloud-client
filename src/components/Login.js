@@ -1,0 +1,62 @@
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
+import { login } from '../action/user'
+
+
+const Container = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 400px;
+    border: 0.5px solid grey;
+    padding: 20px;
+    
+    background-color: whitesmoke;
+    border-radius:30px;
+    height: 300px;
+    margin-top: 10%;
+`
+const Header = styled.div`
+    font-size: 25px;
+    font-weight: 700;
+    color: grey;
+`
+const Input = styled.input`
+    border:none;
+    background: transparent;
+    border-bottom: solid navy 3px;
+    width: 90%;
+    &:focus{
+        outline: none;
+        transform: scale(1.0);
+    };
+`
+const BtnRegistration = styled.button`
+    border-radius:30px;
+    background-color: lightblue;
+    color: grey;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+` 
+
+const Login = () => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
+
+  return (
+    <Container>
+        <Header>Login</Header>
+        <Input value={email} onChange={(e)=> setEmail(e.target.value)} type="text" placeholder='enter name...'/>
+        <Input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder='enter password..'/>
+       
+        <BtnRegistration onClick={() => dispatch(login(email,password))}>Login</BtnRegistration>
+    </Container>
+  )
+}
+
+export default Login
