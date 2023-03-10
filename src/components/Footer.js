@@ -5,13 +5,15 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../reducers/userReducers'
 
-const Nav = styled.div`
+const Foot = styled.div`
+
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
     display: flex;
     justify-content: center;
     height: 59px;
-    background-color: lightblue;
-    align-items: center;
-    width: 100%;
+    background-color: lightgray
 `
 const Container = styled.div`
     display: flex;
@@ -41,45 +43,26 @@ const Login = styled.div`
     margin-right: 20px;
 `
 const Registration = styled.div`
-    flex:1;
-`
-const Exit = styled.button`
-    border-radius:30px;
-    background-color: grey;
-    color: white;
-    font-size: 15px;
-    border: none;
-    cursor: pointer;
-    width: 12%;
-    flex:1;
-
+    flex:4;
 `
 
-const Navbar = () => {
+
+
+const Footer = () => {
     const isAuth = useSelector(state => state.users.isAuth)
-    const dispatch = useDispatch()
-
-  return (
-    <Nav>
-    <Container>
-       
-        <Header> <Img src={Logo} /> MyCloud</Header>
-   
-        {!isAuth &&
-        <>
-         <Login><NavLink to="/login">Login</NavLink></Login>
-         <Registration><NavLink to="/registration">Registration</NavLink></Registration>
-        </>
-        }
-        {isAuth &&
-        <Exit onClick={() => dispatch(logOut())}>Exit</Exit>
-        }
-        
   
-       
+  return (
+    <Foot>
+    <Container>
+    <Header> <Img src={Logo} /> MyCloud</Header>
+   
+
+    <Login></Login>
+    <Registration>Private Build Co.</Registration>
+ 
     </Container>
-    </Nav>
+    </Foot>
   )
 }
 
-export default Navbar   
+export default Footer   

@@ -10,6 +10,7 @@ const Container = styled.div`
     width: 400px;
     border: 0.5px solid grey;
     padding: 20px;
+    justify-content: center;
     
     background-color: whitesmoke;
     border-radius:30px;
@@ -24,21 +25,22 @@ const Header = styled.div`
 const Input = styled.input`
     border:none;
     background: transparent;
+    font-size: 15px;
     border-bottom: solid navy 3px;
     width: 90%;
     &:focus{
-        outline: none;
-        transform: scale(1.0);
+        transform: scale(1.05);
     };
 `
 const BtnRegistration = styled.button`
     border-radius:30px;
     background-color: lightblue;
     color: grey;
-    font-size: 15px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
     width: 50%;
+    margin-top: 20px;
 ` 
 
 const Registration = () => { 
