@@ -15,15 +15,18 @@ const Header = styled.div`
 `
 const Name = styled.div`
     grid-column-start: 2;
+    color: blue;
 
 `
 const Date = styled.div`
     grid-column-start: 5;
     justify-self: center;
+    color: blue;
 `
 const Size = styled.div`
     grid-column-start: 6;
     justify-self: center;
+    color: blue;
 `
 
 const FileList = () => {

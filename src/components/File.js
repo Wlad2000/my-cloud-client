@@ -38,7 +38,6 @@ const File = ({file}) => {
     if(file.type === 'dir'){
       dispatch(pushStack(currentDir))
       dispatch(setCurrentDir(file._id))
-      console.log(currentDir)
     }
   }
 
