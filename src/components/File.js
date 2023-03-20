@@ -4,6 +4,7 @@ import folderLogo from '../assets/img/folder.png'
 import fileLogo from '../assets/img/file.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { popStack, pushStack, setCurrentDir } from '../reducers/fileReducers'
+import { downloadFile } from '../action/file'
 
 const Container = styled.div`
     margin: 10px 0;
@@ -13,6 +14,12 @@ const Container = styled.div`
     &:hover {
       transform: scale(1.02);
     }
+    &:hover .btn {
+    display: flex;
+    grid-column-start: 2;
+    justify-content: center;
+    align-items: center;
+  }
 `
 const Image = styled.img`
   justify-self: center;
@@ -24,10 +31,31 @@ const Name = styled.div`
 const Date = styled.div`
   grid-column-start: 5;
   justify-self: center;
+
 `
 const Size = styled.div`
   grid-column-start: 6;
   justify-self: center;
+
+`
+const Buttons = styled.div`
+  display: none;
+  margin-bottom: 10px;
+`
+const Download = styled.button`
+  padding: 5px;
+  cursor: pointer;
+  background-color: lightblue;
+  border: none;
+  width: 30%;
+`
+const Delete = styled.button`
+  padding: 5px;
+  cursor: pointer;
+  background-color: lightcoral;
+  border: none;
+  width: 50px;
+  margin-left: 10px;
 `
 
 const File = ({file}) => {
@@ -37,8 +65,13 @@ const File = ({file}) => {
   function openHandler(file){
     if(file.type === 'dir'){
       dispatch(pushStack(currentDir))
-      dispatch(setCurrentDir(file._id))
+      dispatch(setCurrentDir(file._id)) 
     }
+  }
+
+  function downloadHandler(e){
+    e.stopPropagation()
+    downloadFile(file)
   }
 
   return (
@@ -47,7 +80,10 @@ const File = ({file}) => {
       <Name>{file.name}</Name>
       <Date>{file.date.slice(0,10)}</Date>
       <Size>{file.size}</Size>
-
+      <Buttons className='btn'>
+      {file.type !== 'dir' && <Download onClick={(e)=>downloadHandler(e)}>Download</Download>}
+      <Delete>Delete</Delete>
+      </Buttons>
     </Container>
   )
 }

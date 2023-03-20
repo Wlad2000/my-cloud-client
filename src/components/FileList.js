@@ -31,7 +31,7 @@ const Size = styled.div`
 
 const FileList = () => {
 
-   const files = useSelector(s => s.files.files).map(file => <File file={file} key={file.id} />)
+   const files = useSelector(s => s.files.files).map(file => <File file={file} key={file._id} />)
 
   return (
     <Container>

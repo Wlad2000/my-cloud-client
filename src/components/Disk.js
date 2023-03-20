@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { createDir, getFiles, uploadFile } from '../action/file'
@@ -65,12 +65,24 @@ const LabelUpload = styled.label`
 const InputUpload = styled.input`
     display: none;
 `
+const Drop = styled.div`
+  width: 80%;
+  border-radius: 20%;
+  border: dashed lightgray 3px;
+  height: 75vh;
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+  font-size: 25px;
+  color: lightblue;
+`
 
 const Disk = () => {
   const dispatch = useDispatch()
   const currentDir = useSelector(state => state.files.currentDir)
-  const dirStack = useSelector(state => state.files.dirStack)
   const lastId = useSelector(state => state.files.last)
+  const [drag,setDrag] = useState(false)
 
     useEffect(() => {
       dispatch(getFiles(currentDir))
@@ -88,9 +100,28 @@ const Disk = () => {
       const files = [...e.target.files]
       files.forEach(file => dispatch(uploadFile(file, currentDir)))
     }
+
+    function dragEnterHandler(e){
+      e.preventDefault()
+      e.stopPropagation()
+      setDrag(true)
+    }
+    function dragLeaveHandler(e){
+      e.preventDefault()
+      e.stopPropagation()
+      setDrag(false)
+    }
+
+    function dropHandler(e){
+      e.preventDefault()
+      e.stopPropagation()
+      let files = [...e.dataTransfer.files] 
+      files.forEach(file => dispatch(uploadFile(file, currentDir)))
+      setDrag(false)
+    }
     
-  return (
-    <Container>
+  return ( !drag ?
+    <Container onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
         <NavContainer>
             <BtnContainer>
             <BtnBack onClick={() => backClickHandler()} >{lastId==null ? "allBack":"Back"}</BtnBack>
@@ -104,6 +135,10 @@ const Disk = () => {
         <FileList/>
         <Popup/>
     </Container>
+    :
+    <Drop onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
+     put your file
+    </Drop>
   )
 }
 
