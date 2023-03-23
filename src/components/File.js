@@ -4,7 +4,7 @@ import folderLogo from '../assets/img/folder.png'
 import fileLogo from '../assets/img/file.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { popStack, pushStack, setCurrentDir } from '../reducers/fileReducers'
-import { downloadFile } from '../action/file'
+import { deleteFile, downloadFile } from '../action/file'
 
 const Container = styled.div`
     margin: 10px 0;
@@ -74,6 +74,11 @@ const File = ({file}) => {
     downloadFile(file)
   }
 
+  function deleteHandler(e){
+    e.stopPropagation()
+    dispatch(deleteFile(file))
+  }
+
   return (
     <Container onClick={()=> openHandler(file)}>
       <Image src={file.type === 'dir' ? folderLogo : fileLogo} alt=""/>
@@ -82,7 +87,7 @@ const File = ({file}) => {
       <Size>{file.size}</Size>
       <Buttons className='btn'>
       {file.type !== 'dir' && <Download onClick={(e)=>downloadHandler(e)}>Download</Download>}
-      <Delete>Delete</Delete>
+      <Delete onClick={(e)=>deleteHandler(e)}>Delete</Delete>
       </Buttons>
     </Container>
   )

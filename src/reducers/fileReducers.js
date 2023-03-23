@@ -26,12 +26,15 @@ const fileSlice = createSlice({
        state.dirStack.push(action.payload)
        state.last = action.payload
       },
-      popStack(state,action){
+      popStack(state){
         state.last = state.dirStack.pop()
+      },
+      delFile(state,action){
+        state.files = [...state.files.filter( file => file._id != action.payload)]
       },
 
     }
   })
   
-  export const {setFiles,setCurrentDir, addFile, setPopup, pushStack,popStack } = fileSlice.actions
+  export const {setFiles,setCurrentDir, addFile, setPopup, pushStack,popStack, delFile } = fileSlice.actions
   export default fileSlice.reducer
