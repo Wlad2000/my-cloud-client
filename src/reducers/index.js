@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import fileReducers from "./fileReducers";
+import uploadReducer from "./uploadReducer";
 import userReducers from "./userReducers";
 
 
@@ -8,6 +9,7 @@ import userReducers from "./userReducers";
 export const store = configureStore({
     reducer:{
         files: fileReducers,
-        users: userReducers
+        users: userReducers,
+        upload: uploadReducer
     }
 })

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { createDir, getFiles, uploadFile } from '../action/file'
+import { getFiles, uploadFile } from '../action/file'
 import { popStack, setCurrentDir, setPopup } from '../reducers/fileReducers'
 import FileList from './FileList'
 import Popup from './Popup'
+import Uploader from './Uploader'
 
 
 
@@ -134,6 +135,7 @@ const Disk = () => {
         </NavContainer>
         <FileList/>
         <Popup/>
+        <Uploader/>
     </Container>
     :
     <Drop onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
