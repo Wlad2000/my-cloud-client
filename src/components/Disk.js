@@ -20,13 +20,15 @@ const NavContainer = styled.div`
   justify-content: space-between;
   height: 40px;
   margin-top: 20px;
+  width: 100%;
+  
 `
 const BtnContainer = styled.div`
   display:flex;
   height: 40px;
   margin: 20px;
   align-items: center;
-  width: 50%;
+  width: 40%;
 `
 const BtnBack = styled.button`
     border-radius:30px;
@@ -35,7 +37,7 @@ const BtnBack = styled.button`
     font-size: 15px;
     border: none;
     cursor: pointer;
-    width: 10%;
+    width: 30%;
     height: 40px;
     
 `
@@ -47,24 +49,24 @@ const BtnCreate = styled.button`
     font-size: 15px;
     border: none;
     cursor: pointer;
-    width: 20%;
+    width: 30%;
     padding: 2px;
     height: 40px;
 
 `
 const Upload = styled.div`
-  
 `
 const LabelUpload = styled.label`
     color: grey;
     border: 2px dashed grey;
     padding: 5px 10px;
     cursor: pointer;
-    margin-left: 10px;
     border-radius: 10px;
+    white-space: nowrap;
 `
 const InputUpload = styled.input`
     display: none;
+
 `
 const Drop = styled.div`
   width: 80%;
@@ -78,16 +80,29 @@ const Drop = styled.div`
   font-size: 25px;
   color: lightblue;
 `
+const SelectSort = styled.select`
+  border: none;
+  border-bottom: 1px solid grey;
+  background: transparent;
+  color: grey;
+  margin-left: 5px;
+  width: 100px;
+`
+const LabelSort = styled.label`
+  color: grey;
+
+`
 
 const Disk = () => {
   const dispatch = useDispatch()
   const currentDir = useSelector(state => state.files.currentDir)
   const lastId = useSelector(state => state.files.last)
   const [drag,setDrag] = useState(false)
+  const [sort,setSort] = useState('type')
 
     useEffect(() => {
-      dispatch(getFiles(currentDir))
-    }, [currentDir])
+      dispatch(getFiles(currentDir, sort))
+    }, [currentDir, sort])
 
     function createDirHandler(){
      // dispatch(createDir(currentDir,'testName'))
@@ -128,6 +143,14 @@ const Disk = () => {
             <BtnBack onClick={() => backClickHandler()} >{lastId==null ? "allBack":"Back"}</BtnBack>
             <BtnCreate onClick={() => createDirHandler()}>Create folder</BtnCreate>
             </BtnContainer>
+            <LabelSort htmlFor='SelectSort'>sort: 
+            <SelectSort value={sort} onChange={(e) => setSort(e.target.value)}>
+              <option value="name">by name</option>
+              <option value="type">by type</option>
+              <option value="date">by date</option>
+              <option value="size">by size</option>
+            </SelectSort>
+            </LabelSort>
             <Upload>
               <LabelUpload htmlFor='inputUpload'>Download File</LabelUpload>
               <InputUpload multiple={true} onChange={(e) => fileUploadHandler(e)} id="inputUpload" type="file" />

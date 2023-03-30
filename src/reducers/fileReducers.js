@@ -30,7 +30,7 @@ const fileSlice = createSlice({
         state.last = state.dirStack.pop()
       },
       delFile(state,action){
-        state.files = [...state.files.filter( file => file._id != action.payload)]
+        state.files = [...state.files.filter( file => file._id !== action.payload)]
       },
 
     }

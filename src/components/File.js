@@ -5,6 +5,7 @@ import fileLogo from '../assets/img/file.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { popStack, pushStack, setCurrentDir } from '../reducers/fileReducers'
 import { deleteFile, downloadFile } from '../action/file'
+import sizeFormat from '../assets/sizeFormat'
 
 const Container = styled.div`
     margin: 10px 0;
@@ -13,6 +14,9 @@ const Container = styled.div`
     display: grid;
     &:hover {
       transform: scale(1.02);
+      background: rgba(211, 211, 211, .3) ;
+      border-bottom: 5px solid grey;
+      
     }
     &:hover .btn {
     display: flex;
@@ -84,7 +88,7 @@ const File = ({file}) => {
       <Image src={file.type === 'dir' ? folderLogo : fileLogo} alt=""/>
       <Name>{file.name}</Name>
       <Date>{file.date.slice(0,10)}</Date>
-      <Size>{file.size}</Size>
+      <Size>{sizeFormat(file.size)}</Size>
       <Buttons className='btn'>
       {file.type !== 'dir' && <Download onClick={(e)=>downloadHandler(e)}>Download</Download>}
       <Delete onClick={(e)=>deleteHandler(e)}>Delete</Delete>

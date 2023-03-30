@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
+import styled,{keyframes} from 'styled-components'
 import { login } from '../action/user'
 
+const loginAnimation = keyframes`
+    0% { opacity: 0; transform: translateY(-50%) }
+    100% {opacity: 1; transform: translateY(0%) }
+`
 
 const Container = styled.div`
     display: flex;
@@ -14,11 +18,14 @@ const Container = styled.div`
     padding: 20px;
     justify-content: center;
 
-    
     background-color: whitesmoke;
     border-radius:30px;
     height: 300px;
     margin-top: 10%;
+
+    animation-name: ${loginAnimation};
+    animation-duration: 700ms;
+    animation-iteration-count: 1;
 `
 const Header = styled.div`
     font-size: 25px;
@@ -45,6 +52,7 @@ const BtnRegistration = styled.button`
     width: 50%;
     margin-top: 20px;
 ` 
+
 
 const Login = () => {
     const [email, setEmail] = useState("")

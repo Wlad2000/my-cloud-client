@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled,{keyframes} from 'styled-components'
 import { registration } from '../action/user'
+
+const registAnimation = keyframes`
+    0% { opacity: 0; transform: translateY(-50%) }
+    100% {opacity: 1; transform: translateY(0%) }
+`
 
 const Container = styled.div`
     display: flex;
@@ -16,6 +21,10 @@ const Container = styled.div`
     border-radius:30px;
     height: 300px;
     margin-top: 10%;
+
+    animation-name: ${registAnimation};
+    animation-duration: 700ms;
+    animation-iteration-count: 1;
 `
 const Header = styled.div`
     font-size: 25px;

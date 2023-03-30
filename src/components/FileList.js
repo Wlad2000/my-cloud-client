@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
+import styled, { keyframes }  from 'styled-components'
 import File from './File'
 
 
@@ -8,6 +8,7 @@ const Container = styled.div`
     margin: 20px 0 ;
     display: flex;
     flex-direction: column;
+
 `
 const Header = styled.div`
     display: grid;
@@ -28,10 +29,21 @@ const Size = styled.div`
     justify-self: center;
     color: blue;
 `
+const fileAnimation = keyframes`
+    0% { opacity: 0; transform: translateX(-50%) }
+    100% {opacity: 1; transform: translateX(0%) }
+`
+const Transition = styled.div`
+    animation-name: ${fileAnimation};
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+`
+
 
 const FileList = () => {
 
-   const files = useSelector(s => s.files.files).map(file => <File file={file} key={file._id} />)
+   const files = useSelector(s => s.files.files)
+
 
   return (
     <Container>
@@ -40,7 +52,13 @@ const FileList = () => {
             <Date>Date</Date>
             <Size>Size</Size>
         </Header>
-        {files}
+            {files.map(file => 
+            <Transition
+                key={file._id}
+            >
+                <File file={file}/>
+            </Transition>
+            )}
     </Container>
   )
 }
