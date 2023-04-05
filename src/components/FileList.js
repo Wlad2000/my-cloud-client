@@ -38,12 +38,27 @@ const Transition = styled.div`
     animation-duration: 500ms;
     animation-iteration-count: 1;
 `
+const NoFiles = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+  width: 100%;
+  color: gray;
+  font-size: 20px;
+`
 
 
 const FileList = () => {
 
    const files = useSelector(s => s.files.files)
-
+    if(files.length === 0){
+        return (
+            <NoFiles>
+                not found files
+            </NoFiles>
+        )
+    }
 
   return (
     <Container>

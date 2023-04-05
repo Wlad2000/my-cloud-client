@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
+import styled,{ keyframes } from 'styled-components'
 import { getFiles, uploadFile } from '../action/file'
 import { popStack, setCurrentDir, setPopup } from '../reducers/fileReducers'
 import FileList from './FileList'
@@ -92,11 +92,41 @@ const LabelSort = styled.label`
   color: grey;
 
 `
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+const Loader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 50px);
+  width: 100%;
+`
+
+const Spinner = styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
+  
+  border-top: 5px solid gray;
+  border-right: 5px solid gray;
+  border-bottom: 5px solid gray;
+  border-left: 8px solid lightgray;
+  background: transparent;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+`;
 
 const Disk = () => {
   const dispatch = useDispatch()
   const currentDir = useSelector(state => state.files.currentDir)
   const lastId = useSelector(state => state.files.last)
+  const loader = useSelector(state => state.loader.isVisible)
   const [drag,setDrag] = useState(false)
   const [sort,setSort] = useState('type')
 
@@ -136,6 +166,15 @@ const Disk = () => {
       setDrag(false)
     }
     
+    if(loader){
+      return(
+        <Loader>
+           <Spinner></Spinner>
+           
+        </Loader>
+      )
+    }
+
   return ( !drag ?
     <Container onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
         <NavContainer>

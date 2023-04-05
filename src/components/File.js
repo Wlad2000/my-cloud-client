@@ -52,6 +52,7 @@ const Download = styled.button`
   background-color: lightblue;
   border: none;
   width: 30%;
+  border-radius: 20px;
 `
 const Delete = styled.button`
   padding: 5px;
@@ -60,6 +61,7 @@ const Delete = styled.button`
   border: none;
   width: 50px;
   margin-left: 10px;
+  border-radius: 20px;
 `
 
 const File = ({file}) => {

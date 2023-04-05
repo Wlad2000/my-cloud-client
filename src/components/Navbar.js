@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from '../assets/img/logo.jpg'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../reducers/userReducers'
+import { getFiles, searchFile } from '../action/file'
+import { ShowLoader } from '../reducers/loaderReducer'
 
 const Nav = styled.div`
     display: flex;
@@ -48,23 +50,59 @@ const Exit = styled.button`
     background-color: grey;
     color: white;
     font-size: 15px;
+    padding: 5px;
     border: none;
     cursor: pointer;
     width: 12%;
     flex:1;
+`
+const Search = styled.input`
+    width: 20%;
+    margin-right: 5%;
+    border: none;
+    border-bottom: 2px solid grey;
+    border-left: 1px solid grey;
+    padding: 5px;
+    background: transparent;
+    color: gray;
 
 `
 
 const Navbar = () => {
     const isAuth = useSelector(state => state.users.isAuth)
+    const currentDir = useSelector(state => state.files.currentDir)
     const dispatch = useDispatch()
+    const [searchValue,setSearchValue] = useState('')
+    const [searchTimeout, setSearchTimeout] = useState(false)
+
+    function searchHandler(e){
+        setSearchValue(e.target.value)
+        if(searchTimeout !== false){
+            clearTimeout(searchTimeout)
+        }
+        dispatch(ShowLoader())
+        if(e.target.value !== ''){
+            setSearchTimeout(setTimeout((value) => {
+                dispatch(searchFile(value))
+            }, 500, e.target.value))
+        }else{
+            dispatch(getFiles(currentDir))
+        }
+    }
 
   return (
     <Nav>
     <Container>
        
         <Header> <Img src={Logo} /> MyCloud</Header>
-   
+        {isAuth &&
+            <Search 
+                type="text" placeholder="Enter title file.."
+                value={searchValue}
+                onChange={(e) => searchHandler(e)}
+            />
+            
+        }
         {!isAuth &&
         <>
          <Login><NavLink to="/login">Login</NavLink></Login>
