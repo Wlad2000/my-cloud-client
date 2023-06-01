@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPopup } from '../reducers/fileReducers'
 import { createDir } from '../action/file'
+import { useTranslation } from 'react-i18next'
+
 
 const Container = styled.div`
     width: 100%;
@@ -35,6 +37,16 @@ const Title = styled.div`
 `
 const BtnClose = styled.button`
     cursor: pointer;
+    background-color: lightcoral;
+    color: white;
+    height: 30px;
+    border: none;
+    width: 30px;
+    border-radius: 50%;
+    &:hover{
+        background-color: red;
+    };
+
 `
 const Input = styled.input`
     margin: 20px 0px;
@@ -49,6 +61,18 @@ const Input = styled.input`
 `
 const BtnCreate = styled.button`
     align-self: flex-end;
+    height: 30px;
+    border: none;
+    color: white;
+    background-color: green;
+    font-size: 13px;
+    width: 70px;
+    border-radius: 50px;
+    cursor: pointer;
+    &:hover{
+        background-color: lightgreen;
+        color: grey;
+    };
 `
 
 const Popup = () => {
@@ -56,6 +80,7 @@ const Popup = () => {
     const [folderName, setFolderName] = useState('')
     const popupDisplay = useSelector(s => s.files.popup)
     const currentDir = useSelector(s => s.files.currentDir)
+    const {t} = useTranslation()
 
     function createHandler(){
         dispatch(createDir(currentDir,folderName));
@@ -67,11 +92,11 @@ const Popup = () => {
     <Container style={{display:popupDisplay}} onClick={() => dispatch(setPopup('none'))}>
         <Content onClick={(e) => e.stopPropagation()}>
         <Header>
-            <Title> Create new folder</Title>
+            <Title>{t("createFolder.title")}</Title>
             <BtnClose onClick={() => dispatch(setPopup('none'))} >X</BtnClose>
         </Header>
-        <Input type="text" placeholder='enter name your folder...' value={folderName} onChange={(e) => setFolderName(e.target.value)}/>
-        <BtnCreate onClick={() => createHandler()}>Create</BtnCreate>
+        <Input type="text" placeholder={t("createFolder.input")} value={folderName} onChange={(e) => setFolderName(e.target.value)}/>
+        <BtnCreate onClick={() => createHandler()}>{t("createFolder.create")}</BtnCreate>
         </Content>
     </Container>
   )

@@ -7,7 +7,8 @@ const fileSlice = createSlice({
       currentDir: null,
       popup: 'none',
       dirStack: [],
-      last: null
+      last: null,
+      view: 'list'
     },
     reducers: {
       setFiles(state,action){
@@ -25,16 +26,19 @@ const fileSlice = createSlice({
       pushStack(state,action){
        state.dirStack.push(action.payload)
        state.last = action.payload
-      },
+      }, 
       popStack(state){
         state.last = state.dirStack.pop()
       },
       delFile(state,action){
         state.files = [...state.files.filter( file => file._id !== action.payload)]
       },
+      setView(state,action){
+        state.view = action.payload
+      }
 
     }
   })
   
-  export const {setFiles,setCurrentDir, addFile, setPopup, pushStack,popStack, delFile } = fileSlice.actions
+  export const {setFiles,setCurrentDir, addFile, setPopup, pushStack,popStack, delFile, setView } = fileSlice.actions
   export default fileSlice.reducer

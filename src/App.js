@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { auth } from './action/user';
 import Disk from './components/Disk';
-import Footer from './components/Footer';
+import './i18n'
 
 
 const Container = styled.div`

@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled,{ keyframes } from 'styled-components'
 import { getFiles, uploadFile } from '../action/file'
-import { popStack, setCurrentDir, setPopup } from '../reducers/fileReducers'
+import { popStack, setCurrentDir, setPopup, setView } from '../reducers/fileReducers'
 import FileList from './FileList'
 import Popup from './Popup'
 import Uploader from './Uploader'
+import IconList from '../assets/img/icon-list.png'
+import IconGrid from '../assets/img/icon-grid.png'
+import { useTranslation } from 'react-i18next'
 
 
 
@@ -39,7 +42,10 @@ const BtnBack = styled.button`
     cursor: pointer;
     width: 30%;
     height: 40px;
-    
+    &:hover {
+    background-color: grey;
+    color: white;
+  }
 `
 const BtnCreate = styled.button`
     margin-left: 20px;
@@ -52,7 +58,25 @@ const BtnCreate = styled.button`
     width: 30%;
     padding: 2px;
     height: 40px;
-
+    &:hover {
+    background-color: green;
+    color: white;
+  }
+`
+const BtnAcc = styled.button`
+    border-radius:30px;
+    background-color: lightgray;
+    color: green;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    width: 12%;
+    height: 30px;
+    margin-right: 2%;
+    &:hover {
+    background-color: green;
+    color: white;
+  }
 `
 const Upload = styled.div`
 `
@@ -63,6 +87,10 @@ const LabelUpload = styled.label`
     cursor: pointer;
     border-radius: 10px;
     white-space: nowrap;
+    &:hover {
+    color: blue;
+    border: 3px dashed lightblue;
+  }
 `
 const InputUpload = styled.input`
     display: none;
@@ -84,13 +112,49 @@ const SelectSort = styled.select`
   border: none;
   border-bottom: 1px solid grey;
   background: transparent;
-  color: grey;
+  color: black;
   margin-left: 5px;
   width: 100px;
+  cursor: pointer;
+  height:25px;
+  &:hover {
+    color: blue;
+   
+  }
 `
 const LabelSort = styled.label`
   color: grey;
+`
+const View = styled.div`
 
+`
+const ViewList = styled.button`
+  height: 30px;
+  width: 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: no-repeat center center;
+  background-size: contain;
+  background-image: url(${IconList});
+  &:hover{
+    background-color: lightblue;
+  }
+
+`
+const ViewGrid = styled.button`
+  height: 30px;
+  width: 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: no-repeat center center;
+  background-size: contain;
+
+  background-image: url(${IconGrid});
+  &:hover{
+    background-color: lightblue;
+  }
 `
 const rotate360 = keyframes`
   from {
@@ -129,6 +193,7 @@ const Disk = () => {
   const loader = useSelector(state => state.loader.isVisible)
   const [drag,setDrag] = useState(false)
   const [sort,setSort] = useState('type')
+  const {t} = useTranslation()
 
     useEffect(() => {
       dispatch(getFiles(currentDir, sort))
@@ -179,19 +244,24 @@ const Disk = () => {
     <Container onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
         <NavContainer>
             <BtnContainer>
-            <BtnBack onClick={() => backClickHandler()} >{lastId==null ? "allBack":"Back"}</BtnBack>
-            <BtnCreate onClick={() => createDirHandler()}>Create folder</BtnCreate>
+            <BtnBack onClick={() => backClickHandler()} >{lastId==null ? `${t("disk.allBack")}`:`${t("disk.back")}`}</BtnBack>
+            <BtnCreate onClick={() => createDirHandler()}>{t("disk.create")}</BtnCreate>
             </BtnContainer>
-            <LabelSort htmlFor='SelectSort'>sort: 
+            <BtnAcc type='button' onClick={()=> setSort('status')}>{t("disk.sort5")}</BtnAcc>
+            <LabelSort htmlFor='SelectSort'>{t("disk.sort")}: 
             <SelectSort value={sort} onChange={(e) => setSort(e.target.value)}>
-              <option value="name">by name</option>
-              <option value="type">by type</option>
-              <option value="date">by date</option>
-              <option value="size">by size</option>
+              <option value="name">{t("disk.sort1")}</option>
+              <option value="type">{t("disk.sort2")}</option>
+              <option value="date">{t("disk.sort3")}</option>
+              <option value="size">{t("disk.sort4")}</option>
             </SelectSort>
             </LabelSort>
+            <View>
+              <ViewList onClick={() => dispatch(setView('list'))} />
+              <ViewGrid onClick={() => dispatch(setView('grid'))}/>
+            </View>
             <Upload>
-              <LabelUpload htmlFor='inputUpload'>Download File</LabelUpload>
+              <LabelUpload htmlFor='inputUpload'>{t("disk.download")}</LabelUpload>
               <InputUpload multiple={true} onChange={(e) => fileUploadHandler(e)} id="inputUpload" type="file" />
             </Upload>
         </NavContainer>
@@ -201,7 +271,7 @@ const Disk = () => {
     </Container>
     :
     <Drop onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
-     put your file
+     {t("disk.drop")}
     </Drop>
   )
 }

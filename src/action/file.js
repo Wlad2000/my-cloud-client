@@ -122,3 +122,18 @@ export function searchFile(search){
         }
     }
 } 
+export function UpdateStatusFile(file,status){
+    return async dispatch => {
+        try{
+            const response = await axios.post(`http://localhost:5000/api/files/update`,{
+                id:`${file._id}`,
+                status:`${status}`
+            })
+            //dispatch(setFiles(response.data))
+            //alert(response.data.message)
+        }catch(e){
+            alert(e?.response?.data?.message)
+        }
+    }
+
+} 

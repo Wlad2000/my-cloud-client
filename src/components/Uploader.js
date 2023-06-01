@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import UploadFile from './UploadFile'
 import { useDispatch, useSelector } from 'react-redux'
 import { Hide } from '../reducers/uploadReducer'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled.div`
     height: 60%;
@@ -28,11 +29,15 @@ const Title = styled.div`
 const ButtonClose = styled.button`
     border: none;
     background-color: lightcoral;
-    color: white;
+    color: black;
     padding: 5px;
     border-radius: 50%;
     width: 30px;
     cursor: pointer;
+    &:hover{
+        background-color: red;
+        color: white;
+    };
 `
 
 const Uploader = () => {
@@ -40,12 +45,13 @@ const Uploader = () => {
 
     const isVisible = useSelector(s=> s.upload.isVisible)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
   return (
         isVisible &&
     <Container>
         <Header>
-            <Title>Uploads</Title>
+            <Title>{t("uploader.title")}</Title>
             <ButtonClose onClick={() => dispatch(Hide())}>X</ButtonClose>
         </Header>
         {files.map(file => 

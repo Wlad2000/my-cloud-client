@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import styled, { keyframes }  from 'styled-components'
 import File from './File'
-
+import { useTranslation } from 'react-i18next'
 
 const Container = styled.div`
     margin: 20px 0 ;
@@ -18,6 +18,11 @@ const Name = styled.div`
     grid-column-start: 2;
     color: blue;
 
+`
+const Status = styled.div`
+    grid-column-start: 4;
+    justify-self: center;
+    color: blue;
 `
 const Date = styled.div`
     grid-column-start: 5;
@@ -47,35 +52,57 @@ const NoFiles = styled.div`
   color: gray;
   font-size: 20px;
 `
+const ContainerGrid = styled.div`
+    margin: 20px 0 ;
+    display: flex;
+    flex-wrap: wrap;
+   
+    
 
+`
 
 const FileList = () => {
-
    const files = useSelector(s => s.files.files)
+   const filesView = useSelector(s => s.files.view)
+   const {t} = useTranslation()
+
     if(files.length === 0){
         return (
             <NoFiles>
-                not found files
+                {t("fileList.noFiles")}
             </NoFiles>
         )
     }
 
-  return (
-    <Container>
-        <Header>
-            <Name>Name</Name>
-            <Date>Date</Date>
-            <Size>Size</Size>
-        </Header>
-            {files.map(file => 
-            <Transition
-                key={file._id}
-            >
-                <File file={file}/>
-            </Transition>
-            )}
-    </Container>
-  )
+    if(filesView === 'grid'){
+        return (
+            <ContainerGrid>
+                    {files.map(file => 
+                        <Transition key={file._id}>
+                            <File file={file}/>
+                        </Transition>
+                    )}
+            </ContainerGrid>
+        )
+    }
+
+    if(filesView === 'list'){
+    return (
+        <Container>
+            <Header>
+                <Name> {t("fileList.name")}</Name>
+                <Status> {t("fileList.status")}</Status>
+                <Date> {t("fileList.date")}</Date>
+                <Size> {t("fileList.size")}</Size>
+            </Header>
+                {files.map(file => 
+                    <Transition key={file._id}>
+                        <File file={file}/>
+                    </Transition>
+                )}
+        </Container>
+    )
+    }
 }
 
 export default FileList

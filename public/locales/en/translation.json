@@ -1,0 +1,51 @@
+{
+    "navbar":{
+        "login":"Login",
+        "registration":"Registration",
+        "exit":"Exit",
+        "search":"Enter title file..",
+        "title":"accounting"
+    },
+    "login":{
+        "login":"Login",
+        "registration":"Registration",
+        "email":"Enter your email..",
+        "password":"Enter your password.."
+    },
+    "disk":{
+        "back":"Back",
+        "allBack":"All Back",
+        "create":"Create folder",
+        "sort":"sort files",
+        "sort1":"by name",
+        "sort2":"by type",
+        "sort3":"by data",
+        "sort4":"by size",
+        "sort5":"firsts accepted",
+        "download":"Download File",
+        "drop":"put your file"
+    },
+    "fileList":{
+        "name":"Name",
+        "status":"Status",
+        "date":"Date",
+        "size":"Size",
+        "noFiles":"not found files"
+    },
+    "file":{
+        "delete":"Delete",
+        "status":"Status",
+        "status1":"Edited",
+        "status2":"Accepted",
+        "status3":"Archived",
+        "download":"Download"
+    },
+    "uploader":{
+        "title":"Uploads"
+    },
+    "createFolder":{
+        "title":"Create new folder",
+        "create":"Create",
+        "input":"Enter name your folder..."
+    }
+}

@@ -24,6 +24,10 @@ const ButtonClose = styled.button`
     border-radius: 10px;
     width: 30px;
     cursor: pointer;
+    &:hover{
+        background-color: lightcoral;
+        color:white;
+    };
 `
 const ProgressBar = styled.div`
     height: 1rem;

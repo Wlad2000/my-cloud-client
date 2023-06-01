@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled,{keyframes} from 'styled-components'
 import { registration } from '../action/user'
+import { useTranslation } from 'react-i18next'
 
 const registAnimation = keyframes`
     0% { opacity: 0; transform: translateY(-50%) }
@@ -50,19 +51,25 @@ const BtnRegistration = styled.button`
     cursor: pointer;
     width: 50%;
     margin-top: 20px;
+    &:hover {
+    background-color: green;
+    color: white;
+   
+  }
 ` 
 
 const Registration = () => { 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const {t} = useTranslation()
 
   return (
     <Container>
-        <Header>Registration</Header>
-        <Input value={email} onChange={(e)=> setEmail(e.target.value)} type="text" placeholder='enter name...'/>
-        <Input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder='enter password..'/>
+        <Header>{t("login.registration")}</Header>
+        <Input value={email} onChange={(e)=> setEmail(e.target.value)} type="text" placeholder={t("login.email")}/>
+        <Input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder={t("login.password")}/>
        
-        <BtnRegistration onClick={() => registration(email,password)}>Registration</BtnRegistration>
+        <BtnRegistration onClick={() => registration(email,password)}>{t("login.registration")}</BtnRegistration>
     </Container>
   )
 }

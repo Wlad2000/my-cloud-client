@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled,{keyframes} from 'styled-components'
 import { login } from '../action/user'
+import { useTranslation } from 'react-i18next'
 
 const loginAnimation = keyframes`
     0% { opacity: 0; transform: translateY(-50%) }
@@ -51,6 +52,11 @@ const BtnRegistration = styled.button`
     cursor: pointer;
     width: 50%;
     margin-top: 20px;
+    &:hover {
+    background-color: green;
+    color: white;
+   
+  }
 ` 
 
 
@@ -58,14 +64,15 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const dispatch = useDispatch()
+    const {t} = useTranslation()
+
 
   return (
     <Container>
-        <Header>Login</Header>
-        <Input value={email} onChange={(e)=> setEmail(e.target.value)} type="text" placeholder='enter name...'/>
-        <Input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder='enter password..'/>
-       
-        <BtnRegistration onClick={() => dispatch(login(email,password))}>Login</BtnRegistration>
+        <Header>{t("login.login")}</Header>
+        <Input value={email} onChange={(e)=> setEmail(e.target.value)} type="text" placeholder={t("login.email")}/>
+        <Input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder={t("login.password")}/>
+        <BtnRegistration onClick={() => dispatch(login(email,password))}>{t("login.login")}</BtnRegistration>
     </Container>
   )
 }
